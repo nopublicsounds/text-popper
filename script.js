@@ -3,9 +3,28 @@ const { Engine, World, Bodies, Runner } = Matter;
 const engine = Engine.create();
 const world = engine.world;
 
-const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 20, window.innerWidth, 40, { isStatic: true });
+const w = window.innerWidth;
+const h = window.innerHeight;
+const thickness = 40;
 
-World.add(world, ground);
+const ground = Bodies.rectangle(w / 2, h - thickness / 2, w, thickness, { isStatic: true });
+const ceiling = Bodies.rectangle(w / 2, -thickness / 2, w, thickness, { isStatic: true });
+const leftWall = Bodies.rectangle(-thickness / 2, h / 2, thickness, h, { isStatic: true });
+const rightWall = Bodies.rectangle(w + thickness / 2, h / 2, thickness, h, { isStatic: true });
+
+const mouse = Matter.Mouse.create(document.getElementById('board'));
+const mouseConstraint = Matter.MouseConstraint.create(engine, {
+    mouse: mouse,
+    constraint:{
+        stiffness: 0.2,
+        render:{
+            visible: false
+        }
+    }
+});
+
+World.add(world, [ground, ceiling, leftWall, rightWall, mouseConstraint]);
+
 Runner.run(Runner.create(), engine);
 
 const DOM = document.getElementById('board');

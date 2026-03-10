@@ -8,10 +8,14 @@
         html, body {
             margin: 0;
             overflow: hidden;
+            -webkit-user-select:none;
+            -moz-user-select:none;
+            -ms-user-select:none;
+            user-select:none
         }
     </style>
 </head>
-<body id = "board" style = "position:relative; width:100vw; height:100vh; overflow:hidden;">
+<body id = "board" style = "position:relative; width:100vw; height:100vh; overflow:hidden;" ondragstart = "return false;">
     <div style = "position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); text-align:center;">
         <h1>Text-Popper</h1>
         <p>type something...</p>
