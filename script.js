@@ -63,7 +63,7 @@ DOM.addEventListener('keydown', (event) => {
 
     const body = Bodies.rectangle(w / 2, h / 2, size, size);
     World.add(world, body);
-    Matter.Body.setVelocity(body, { x: (Math.random() - 0.5) * 20, y: -(Math.random() * 10 + 10) });
+    Matter.Body.setVelocity(body, { x: (Math.random() - 0.5) * 20, y: -(Math.random() * 10 + 15) });
     
     letters.push({ el, body, size });
 });
