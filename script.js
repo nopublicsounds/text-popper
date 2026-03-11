@@ -37,6 +37,7 @@ btn.addEventListener('click', function(){
 
 const arrowForce = { ArrowLeft: [-0.1,0], ArrowRight: [0.1,0], ArrowUp: [0,-0.1], ArrowDown: [0,0.1] };
 
+const letters = [];
 const DOM = document.getElementById('board');
 DOM.addEventListener('keydown', (event) => {
     const dir = arrowForce[event.key];
@@ -50,7 +51,6 @@ DOM.addEventListener('keydown', (event) => {
 
         return;
     }
-
     
     const size = 50;
     const el = document.createElement('h2');
@@ -63,19 +63,17 @@ DOM.addEventListener('keydown', (event) => {
 
     const body = Bodies.rectangle(w / 2, h / 2, size, size);
     World.add(world, body);
-    Matter.Body.setVelocity(body, { x: (Math.random() - 0.5) * 20, y: (Math.random() - 0.5) * 20 });
-
-    function update(){
-        el.style.left = (body.position.x - size / 2) + "px";
-        el.style.top = (body.position.y - size / 2) + "px";
-        el.style.transform = `rotate(${body.angle}rad)`;
-        requestAnimationFrame(update);
-
-        world.bodies.forEach((b) => {
-            if(!b.isStatic){
-                b.frictionAir = isZeroG ? 0.005 : 0.01;
-            }
-        });
-    }
-    update();
+    Matter.Body.setVelocity(body, { x: (Math.random() - 0.5) * 20, y: -(Math.random() * 10 + 10) });
+    
+    letters.push({ el, body, size });
 });
+
+function globalUpdate() {
+    letters.forEach(({ el, body, size }) => {
+        el.style.left = (body.position.x - size / 2) + 'px';
+        el.style.top  = (body.position.y - size / 2) + 'px';
+        el.style.transform = `rotate(${body.angle}rad)`;
+    });
+    requestAnimationFrame(globalUpdate);
+}
+globalUpdate();
